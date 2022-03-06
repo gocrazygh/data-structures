@@ -1,3 +1,5 @@
+//The hash table is famous for it's constant time complexity
+
 package main
 
 import (
@@ -6,41 +8,41 @@ import (
 
 const aSize = 5
 
-//hash table (array)
+//The structure of the hash table is an array
 type HashTable struct {
 	array [aSize]*Bucket
 }
 
-//bucket (linked keys)
+//The bucket is the linked list appeded to the hash table
 type Bucket struct {
 	head *BucketNode
 }
 
-//bucket node (stuff in the bucket)
+//The keys will be stored in the bucket and will be a bucket node
 type BucketNode struct {
 	key string
 	next *BucketNode
 }
 
-//insert hash table (array)
+//The insert function for the hash table (array)
 func (h *HashTable) Insert(key string) {
 	index := hash(key)
 	h.array[index].InsertBucket(key)
 }
-//search hash table (array)
+//The search function for the hash table (array)
 func (h *HashTable) Search(key string) bool{
 	index := hash(key)
 	return h.array[index].SearchBucket(key)
 }
-//delete hash table (array)
+//The delete function for the hash table (array)
 func (h *HashTable) Delete(key string) {
 	index := hash(key)
 	h.array[index].DeleteBucket(key)
 	
 }
 
-
-//insert bucket (linked keys)
+//These three functions edit the bucket
+//The insert function for the bucket(linked keys)
 func (b *Bucket)InsertBucket(k string)  {
 	if !b.SearchBucket(k){
 	newNode := &BucketNode{key:k}
@@ -51,7 +53,7 @@ func (b *Bucket)InsertBucket(k string)  {
 	}
 }
 
-//search bucket (linked keys)
+//The search function for the bucket (linked keys)
 func (b *Bucket)SearchBucket(k string) bool {
 	cNode := b.head
 	for cNode != nil {
@@ -63,7 +65,7 @@ func (b *Bucket)SearchBucket(k string) bool {
 	return false
 }
 
-//delete bucket (linked keys)
+//The delete function for the bucket (linked keys)
 func (b *Bucket)DeleteBucket(k string)  {
 
     if b.head.key == k{
@@ -80,7 +82,8 @@ func (b *Bucket)DeleteBucket(k string)  {
 	}
 }
 
-//hash
+//This function turns the string to ascii int and divided by the size
+//of the array to get it's index
 func hash(key string) int {
 	r := 0
 	for _, v := range key {
@@ -89,7 +92,7 @@ func hash(key string) int {
 	return r % aSize
 }
 
-//create hash table
+//This function creates a hash table
 func Create() *HashTable {
 	r := &HashTable{}
 	for i := range r.array {
@@ -99,7 +102,7 @@ func Create() *HashTable {
 }
 
 func main() {
-	myHashTable := Create()
+	myHashTable := Create()//Creating a hash table
 
 	keys := []string{
 		"mike",
@@ -109,11 +112,11 @@ func main() {
 		"jake",
 	}
 
-	for _, v := range keys {
+	for _, v := range keys {//Inserting keys to the hash table
 		myHashTable.Insert(v)
 	}
     
-	fmt.Println(myHashTable.Search("mike"))
-	myHashTable.Delete("mike")
-	fmt.Println(myHashTable.Search("mike"))
+	fmt.Println(myHashTable.Search("mike"))//Searching for mike
+	myHashTable.Delete("mike")//Deleting mike
+	fmt.Println(myHashTable.Search("mike"))//Searching again for mike
 }
