@@ -1,4 +1,3 @@
-//Credits to Junmin Lee
 //Here's a simple graph data structure
 package main
 
