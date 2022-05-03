@@ -1,2 +1,2 @@
 # Data Structures
-A collection of data structures
+Basic data structures in Go
